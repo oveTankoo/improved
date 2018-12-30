@@ -7,7 +7,7 @@ def change_it(n):
 	blc = local_balance.balance
 	blc += n
 	blc -= n
-	if blc == 0:
+	if blc != 0:
 		print(blc)
 
 def run_thread(n):
