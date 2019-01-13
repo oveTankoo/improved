@@ -6,6 +6,7 @@ import xmlrpc.client
 proxy = xmlrpc.client.ServerProxy("http://localhost:6789/")
 num = 10
 # 使用RPC调用已注册的函数
-result = proxy.double(num)
+result_1 = proxy.double(num)
+result_2 = proxy.power(num)
 # 打印返回值
-print("Double %s is %s."%(num, result))
+print("Double %s is %s.Pow %s is %s."%(num, result_1, num, result_2))
