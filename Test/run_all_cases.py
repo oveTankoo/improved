@@ -1,16 +1,18 @@
 # coding : utf-8
 # 主题：按测试模块，实现最多文件夹数的并发执行
+# 问题：报告中各脚本的结果重叠了
 import os, time
 import unittest
 import HTMLTestRunner
 import threading
+import multiprocessing
 
 class TestResult(object):
     
     def create_suite(self):
         run_dir = '.\\test_case'
         case_dir = [x for x in os.listdir(run_dir)]
-        print(case_dir)
+        #print(case_dir)
         # 初始化测试集（空列表）
         suite = []
         #应用unittest.TestSuite()类，创建一个测试容器
@@ -33,28 +35,30 @@ class TestResult(object):
         now = time.strftime("%Y-%m-%d %H-%M-%S",time.localtime())
         #定义报告存放路径，支持相对路径
         report = '.\\test_report\\'+ now +'_API_Result.html'
+        fp = open(report,'wb')
         
         proc_list = []
         s = 0
 
-        with open(report,'wb') as fp:
-            for item in allTest:
-                #定义测试报告
-                runner = HTMLTestRunner.HTMLTestRunner(
-                                        stream = fp,
-                                        title = str(item[1]) + u'测试报告',
-                                        description = u'用例执行情况:',
-                                        verbosity = 0)
-                #执行测试用例
-                #result = runner.run(allTest)
-                proc = threading.Thread(target = runner.run, args = (item[0],))
-                proc_list.append(proc)
-                s = s + 1
+        for item in allTest[0]:
+            print(item)
+            #定义测试报告
+            runner = HTMLTestRunner.HTMLTestRunner(
+                                    stream = fp,
+                                    title = u'测试报告',
+                                    description = u'用例执行情况:',
+                                    verbosity = 0)
+            #执行测试用例
+            #result = runner.run(allTest)
+            proc = threading.Thread(target = runner.run, args = (item,))
+            proc_list.append(proc)
+            s = s + 1
 
-            for proc in proc_list:
-                proc.start()
-            for proc in proc_list:
-                proc.join()
+        for proc in proc_list:
+            proc.start()
+        for proc in proc_list:
+            proc.join()
+        fp.close()
 
 if __name__ == '__main__':
     TestResult().run_suite()
