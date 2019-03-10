@@ -3,3 +3,4 @@
 2019.03.03 #Learn Git is a very funny thing !
 Creating a new branch is quick and simple.
 I am learning merge with --no--ff mode.
+Git is a free software.
