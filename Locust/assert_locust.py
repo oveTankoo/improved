@@ -1,7 +1,6 @@
 # coding: utf-8
 # author: adam
 # subject: To do assert reponse.
-# 
 from locust import HttpLocust, TaskSet, task
 
 class UserTask(TaskSet):
@@ -10,9 +9,9 @@ class UserTask(TaskSet):
 	def job(self):
 		with self.client.get("/", catch_response = True) as response:
 			if response.status_code == 200:
-				response.success()
+				response.failure("Request failed !")
 			else:
-				response.failure("Failure!")
+				response.sucsess()
 
 class User(HttpLocust):
 	task_set = UserTask

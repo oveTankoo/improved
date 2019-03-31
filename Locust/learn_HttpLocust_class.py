@@ -11,7 +11,7 @@ class UserTask(TaskSet):
 
 # 每一个模拟的用户，可以看做一个HttpLocust类的实例，HttpLocust类有以下属性：
 class UserOne(HttpLocust):
-	# 指向一个TaskSet类，TaskSet类定义了每个用户的行为
+	# 指向一个TaskSet类，TaskSet类定义了每个用户的行为(执行什么任务)
 	task_set = UserTask
 	# 一个Locust实例被挑选执行的权重，数值越大，执行频率越高
 	weight = 1
